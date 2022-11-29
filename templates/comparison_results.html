@@ -6,8 +6,8 @@
         TODO: Replace the hard-coded cities and date below with data from the 
         server.
     #}
-    <h1>Weather in [CITY1] and [CITY2]</h1>
-    <p>[TODAYS_DATE]</p>
+    <h1>Weather in {{city1['name']}} and {{city2['name']}}</h1>
+    <p>{{date}}</p>
 
 
     {#
@@ -15,19 +15,35 @@
         Replace 'F' with the appropriate units.
     #}
     <p>
-        It is [NUM_DEGREES] [UNITS] [WARMER/COLDER] in [CITY1] than in [CITY2] today.
+       {% if city1['temp'] - city2['temp'] > 0 %}
+       It is {{city1['temp'] - city2['temp']}} warmer in {{city1['name']}} than {{city2['name']}}
+       {%elif city1['temp'] - city2['temp'] < 0%}
+       It is {{city2['temp'] - city1['temp']}} colder in {{city1['name']}} than {{city2['name']}}
+       {% endif %}
     </p>
 
     <p>
-        The humidity in [CITY1] is [AMOUNT] [GREATER/LESS] than in [CITY2].
+        {% if city1['humidity'] - city2['humidity'] > 0 %}
+        The humidity in {{city1['name']}} is {{city1['humidity'] - city2['humidity']}}% greater than in {{city2['name']}}
+        {% elif city1['humidity'] - city2['humidity'] < 0 %}
+        The humidity in {{city1['name']}} is {{city2['humidity'] - city1['humidity']}}% less than in {{city2['name']}}
+        {% endif %}
     </p>
 
     <p>
-        The wind speed in [CITY1] is [AMOUNT] [GREATER/LESS] than in [CITY2].
+        {% if city1['wind_speed'] - city2['wind_speed'] > 0 %}
+        The wind speed in {{city1['name']}} is {{city1['wind_speed'] - city2['wind_speed']}} miles/hour greater than in {{city2['name']}}
+        {% elif city1['wind_speed'] - city2['wind_speed'] < 0 %}
+        The wind speed in {{city1['name']}} is {{city2['wind_speed'] - city1['wind_speed']}} miles/hour greater than in {{city2['name']}}
+        {% endif %}
     </p>
 
     <p>
-        The sun sets in [CITY1] [HOURS] hours [EARLIER/LATER] than in [CITY2].
+        {% if city1['sunset'] > city2['sunset'] %}
+        The sun sets in {{city1['name']}} {{city1['sunset'] - city2['sunset']}} earlier than in {{city2['name']}}
+        {% elif city1['sunset'] < city2['sunset'] %}
+        The sun sets in {{city2['name']}} {{city2['sunset'] - city1['sunset']}} earlier than in {{city1['name']}}
+        {% endif %}
     </p>
     
 </section>
